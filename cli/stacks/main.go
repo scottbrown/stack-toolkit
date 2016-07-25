@@ -45,6 +45,7 @@ func main() {
 
   if err != nil {
     fmt.Fprintln(os.Stderr, "%s\n", err.Error())
+    os.Exit(1)
   }
 
   for i := range response.Stacks {
