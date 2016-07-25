@@ -1,55 +1,52 @@
 package main
 
 import (
-  "errors"
   "fmt"
   "os"
+  "time"
+
+  "github.com/urfave/cli"
 )
 
-type Arguments struct {
-  ProgramName string
-  Region string
-  StackName string
-}
-
-func (a *Arguments) Parse(arg_data []string) error {
-  a.ProgramName = arg_data[0]
-
-  if len(arg_data) < 3 {
-    msg := fmt.Sprintf("Usage: %s STACK_NAME REGION", a.ProgramName)
-    return errors.New(msg)
-  }
-
-  a.StackName = arg_data[1]
-  a.Region = arg_data[2]
-
-  return nil
-}
-
 func main() {
-  args := Arguments{}
+  app := cli.NewApp()
+  app.Name = "stacks"
+  app.Copyright = "(c) 2016 Unbounce Marketing Solutions Inc."
+  app.Compiled = time.Now()
+  app.UsageText = "stacks STACK_NAME REGION"
+  app.Authors = []cli.Author{
+    cli.Author{
+      Name: "Infrastructure Team",
+    },
+  }
+  app.Usage = "Lists all active/created stacks in a given AWS region."
+  app.Action = func(c *cli.Context) error {
+    stack_name := ""
+    region := ""
+    if c.NArg() >= 2 {
+      stack_name = c.Args()[0]
+      region = c.Args()[1]
+    } else {
+      cli.ShowAppHelp(c)
+      return nil
+    }
+ 
+    stack := Stack{ Name: stack_name, Region: region }
 
-  err := args.Parse(os.Args)
+    instance_names, err := stack.GetInstanceNames()
 
-  if err != nil {
-    fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-    os.Exit(1)
+    if err != nil {
+      fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+      os.Exit(1)
+    }
+
+    for _, name := range instance_names {
+      fmt.Println(name)
+    }
+
+    return nil
   }
 
-  stack := Stack{
-    Name: args.StackName,
-    Region: args.Region,
-  }
-
-  instance_names, err := stack.GetInstanceNames()
-
-  if err != nil {
-    fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-    os.Exit(1)
-  }
-
-  for _, name := range instance_names {
-    fmt.Println(name)
-  }
+  app.Run(os.Args)
 }
 
