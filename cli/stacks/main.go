@@ -48,8 +48,8 @@ func main() {
     os.Exit(1)
   }
 
-  for i := range response.Stacks {
-    fmt.Println(i)
+  for _, stack := range response.Stacks {
+    fmt.Println(*stack.StackName)
   }
 }
 
