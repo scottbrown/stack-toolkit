@@ -4,10 +4,6 @@ import (
   "errors"
   "fmt"
   "os"
-
-  "github.com/aws/aws-sdk-go/aws"
-  "github.com/aws/aws-sdk-go/aws/session"
-  "github.com/aws/aws-sdk-go/service/cloudformation"
 )
 
 type Arguments struct {
@@ -38,18 +34,19 @@ func main() {
     os.Exit(1)
   }
 
-  svc := cloudformation.New(session.New(), &aws.Config{Region: aws.String(args.Region)})
+  region := Region{
+    Name: args.Region,
+  }
 
-  svc_input := cloudformation.DescribeStacksInput{}
-  response, err := svc.DescribeStacks(&svc_input)
+  stack_names, err := region.GetCreatedStacks()
 
   if err != nil {
     fmt.Fprintf(os.Stderr, "%s\n", err.Error())
     os.Exit(1)
   }
 
-  for _, stack := range response.Stacks {
-    fmt.Println(*stack.StackName)
+  for _, name := range stack_names {
+    fmt.Println(name)
   }
 }
 
