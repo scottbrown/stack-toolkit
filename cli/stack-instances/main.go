@@ -4,10 +4,6 @@ import (
   "errors"
   "fmt"
   "os"
-
-  "github.com/aws/aws-sdk-go/aws"
-  "github.com/aws/aws-sdk-go/aws/session"
-  "github.com/aws/aws-sdk-go/service/ec2"
 )
 
 type Arguments struct {
@@ -40,34 +36,20 @@ func main() {
     os.Exit(1)
   }
 
-  config := &aws.Config{
-    Region: aws.String(args.Region),
+  stack := Stack{
+    Name: args.StackName,
+    Region: args.Region,
   }
 
-  svc := ec2.New(session.New(), config)
-
-  params := &ec2.DescribeInstancesInput{
-    Filters: []*ec2.Filter{
-      {
-        Name: aws.String("tag:aws:cloudformation:stack-name"),
-        Values: []*string{
-          aws.String(args.StackName),
-        },
-      },
-    },
-  }
-
-  response, err := svc.DescribeInstances(params)
+  instance_names, err := stack.GetInstanceNames()
 
   if err != nil {
     fmt.Fprintf(os.Stderr, "%s\n", err.Error())
     os.Exit(1)
   }
 
-  for _, reservation := range response.Reservations {
-    for _, instance := range reservation.Instances {
-      fmt.Println(*instance.PublicDnsName)
-    }
+  for _, name := range instance_names {
+    fmt.Println(name)
   }
 }
 
