@@ -26,12 +26,12 @@ dist-osx:
 	mkdir -p $(DARWIN_AMD64_DIST_DIR)
 	GOOS=darwin GOARCH=amd64 go build -o $(DARWIN_AMD64_DIST_DIR)/stacks $(REPO)/cli/stacks
 	GOOS=darwin GOARCH=amd64 go build -o $(DARWIN_AMD64_DIST_DIR)/stack-instances $(REPO)/cli/stack-instances
-	tar cfz $(DIST_DIR)/stack-toolkit.$(VERSION).darwin-amd64.tgz -C $(DARWIN_AMD64_DIST_DIR) .
+	tar cfz $(DIST_DIR)/stack-toolkit.$(VERSION).darwin-amd64.tar.gz -C $(DARWIN_AMD64_DIST_DIR) .
 
 dist-linux:
 	$(eval LINUX_AMD64_DIST_DIR := $(DIST_DIR)/linux.amd64)
 	mkdir -p $(LINUX_AMD64_DIST_DIR)
 	GOOS=linux GOARCH=amd64 go build -o $(LINUX_AMD64_DIST_DIR)/stacks $(REPO)/cli/stacks
 	GOOS=linux GOARCH=amd64 go build -o $(LINUX_AMD64_DIST_DIR)/stack-instances $(REPO)/cli/stack-instances
-	tar cfz $(DIST_DIR)/stack-toolkit.$(VERSION).linux-amd64.tgz -C $(LINUX_AMD64_DIST_DIR) .
+	tar cfz $(DIST_DIR)/stack-toolkit.$(VERSION).linux-amd64.tar.gz -C $(LINUX_AMD64_DIST_DIR) .
 
