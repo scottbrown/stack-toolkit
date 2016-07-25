@@ -20,3 +20,23 @@ This command lists the active CloudFormation stacks in a given `REGION`.
 
 This command lists the EC2 instances that belong to a given `STACK_NAME` within a given `REGION`.
 
+## Fun Stuff
+
+The output from the commands can be combined with other Unix/Linux utilities to form a workflow.
+
+### Example 1: Finding a specific group of stacks
+
+Provide an alphabetically sorted list of stacks labeled "production" from the us-east-1 AWS region.
+
+```
+$ stacks us-east-1 | grep production | sort
+```
+
+### Example 2: SSHing into an instance
+
+Provide the `ssh` command with one EC2 public DNS name, retrieved from the example-stack in us-east-1.  The `head -1` ensures that only one result is returned (in the case of instances behind an autoscaling group).
+
+```
+$ ssh $(stack-instances example-stack us-east-1 | head -1)
+```
+
