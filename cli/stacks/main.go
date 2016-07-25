@@ -44,7 +44,7 @@ func main() {
   response, err := svc.DescribeStacks(&svc_input)
 
   if err != nil {
-    fmt.Fprintln(os.Stderr, "%s\n", err.Error())
+    fmt.Fprintf(os.Stderr, "%s\n", err.Error())
     os.Exit(1)
   }
 
