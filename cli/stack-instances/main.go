@@ -14,6 +14,7 @@ func main() {
   app.Copyright = "(c) 2016 Unbounce Marketing Solutions Inc."
   app.Compiled = time.Now()
   app.UsageText = "stacks STACK_NAME REGION"
+  app.Version = Version
   app.Authors = []cli.Author{
     cli.Author{
       Name: "Infrastructure Team",
