@@ -6,7 +6,7 @@ PROJECT_NAME := stack-toolkit
 REPO := github.com/unbounce/stack-toolkit
 DIST_DIR := $(GOPATH)/dist
 
-LDFLAGS=-ldflags="-X $(REPO)/cli/$(BINARY)/main.Version=$(VERSION)"
+LDFLAGS=-ldflags="-X main.Version=$(VERSION)"
 ARCH_DIST_DIR=$(DIST_DIR)/$(OS)-$(ARCH)
 
 BUILD_COMMAND = GOOS=$(OS) GOARCH=$(ARCH) go build $(LDFLAGS) -o $(ARCH_DIST_DIR)/$(BINARY) $(REPO)/cli/$(BINARY)
