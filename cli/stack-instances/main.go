@@ -11,7 +11,7 @@ import (
 func main() {
   app := cli.NewApp()
   app.Name = "stacks"
-  app.Copyright = "(c) 2016 Unbounce Marketing Solutions Inc."
+  app.Copyright = fmt.Sprintf("(c) %v Unbounce Marketing Solutions Inc.", time.Now().Year())
   app.Compiled = time.Now()
   app.UsageText = "stacks STACK_NAME REGION"
   app.Version = Version
