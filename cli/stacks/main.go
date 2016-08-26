@@ -30,6 +30,16 @@ func main() {
       return nil
     }
 
+    if os.Getenv("AWS_ACCESS_KEY_ID") == "" {
+      fmt.Fprintf(os.Stderr, "%s\n", "Please set an AWS_ACCESS_KEY_ID")
+      os.Exit(1)
+    }
+
+    if os.Getenv("AWS_SECRET_ACCESS_KEY") == "" {
+      fmt.Fprintf(os.Stderr, "%s\n", "Please set an AWS_SECRET_ACCESS_KEY")
+      os.Exit(1)
+    }
+
     region := Region{ Name: name }
 
     stack_names, err := region.GetCreatedStacks()
