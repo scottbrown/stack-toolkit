@@ -1,6 +1,6 @@
 package main
 
 var (
-  Version string
+  Version = "Development"
 )
 
