@@ -29,6 +29,13 @@ install: ## Builds and installs the binaries locally
 clean: ## Removes any derived files and directories
 	rm -rf $(DIST_DIR)
 
+build:
+	go build -o .build/stacks github.com/scottbrown/stack-toolkit/cli/stacks
+	go build -o .build/stack-instances github.com/scottbrown/stack-toolkit/cli/stack-instances
+
+test:
+	go test ./...
+
 dist-prepare:
 ifndef VERSION
 	$(error VERSION is required to continue)
