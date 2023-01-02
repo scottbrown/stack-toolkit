@@ -3,7 +3,7 @@ module github.com/scottbrown/stack-toolkit
 go 1.19
 
 require (
-	github.com/aws/aws-sdk-go v1.44.146
+	github.com/aws/aws-sdk-go v1.44.171
 	github.com/urfave/cli v1.22.10
 )
 
