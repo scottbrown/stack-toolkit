@@ -1,6 +1,6 @@
 module github.com/scottbrown/stack-toolkit
 
-go 1.19
+go 1.27.4
 
 require (
 	github.com/aws/aws-sdk-go v1.44.204
